@@ -530,6 +530,7 @@ body{
     border-radius: 25px;
     border: 1px white;
     font-size: 24px;
+    text-align: center;
 }
 
 .ip_submit{
@@ -556,6 +557,11 @@ body{
     text-decoration: none;
 }
 
+.temp{
+    text-decoration: none;
+    color: white;
+}
+
 /* login styles end */
 
 /* team styles start */
@@ -565,3 +571,31 @@ body{
 }
 
 /* team styles end */
+
+/* control styles start */
+
+.control_wrapper{
+    margin: 60px 30px 10px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.video_block{
+    width: 50%;  
+}
+
+.camera_1{
+    width: 500px;
+    height: 500px;
+    border: 3px solid #A64221;
+}
+
+.camera_2{
+    width: 200px;
+    height: 200px;
+    border: 3px solid #A64221;
+    margin-left: 60%;
+    margin-top: 60%;
+}
+
+/* control styles end */
