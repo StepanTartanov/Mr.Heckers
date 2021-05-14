@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+     <meta charset="utf-8">
+    <meta name="description" content="WebRTC code samples">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+    <meta itemprop="description" content="Client-side WebRTC code samples">
+    <meta itemprop="name" content="WebRTC code samples">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta id="theme-color" name="theme-color" content="#ffffff">
+    <title>Mr.Heckers</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header class="Con">
+        <div class="Text_cntr">
+            <h1>Управление</h1>
+        </div>
+    </header>
+
+    <div>
+        <div class="CrossUp">
+        </div>
+        <div class="CrossDown">
+        </div>
+        <div class="CrossLeft">
+        </div>
+        <div class="CrossRight">
+        </div>
+    </div>
+
+    <div>
+        <p><input class="CheckA" type="checkbox" name="a" value="Включить шлангбаум"> Включить шлагбаум</p>
+    </div>
+	
+	<div>
+		<select class="List">
+			<option disabled>Выберите светофор</option>
+			<option value="red">Красный</option>
+			<option selected value="yellow">Жёлтый</option>
+			<option value="green">Зелённый</option>
+            <option value="random">Случайный</option>
+		</select>
+	</div>
+
+    <div>
+        <select class="List1">
+            <option disabled>Выберите светофор</option>
+            <option value="red1">Красный</option>
+            <option selected value="yellow1">Жёлтый</option>
+            <option value="green1">Зелённый</option>
+            <option value="random">Случайный</option>
+        </select>
+    </div>
+
+    <div class="Text_Ctr">
+        <p>Светофор 1</p>
+        <p>Световор 2</p>
+    </div>
+
+    <div class="Cube"></div>
+    
+    <div class="Char">Датчики</div>
+    <br>
+    <div class="Sensor_R">
+        <p>Ультр. зв.</p>
+        <p>Инфр.(лев)</p>
+        <p>Инфр.(прав)</p>
+        <p>X</p>
+        <p>Y</p>
+    </div>
+
+    <div class="Figure">
+        <div class="Pole"></div>
+        <div class="Pole"></div>
+        <div class="Pole"></div>
+        <div class="Pole"></div>
+        <div class="Pole"></div>
+    </div>
+
+    
+    <div class="WebCam">
+
+    <div id="container">
+        <video id="gum-local" autoplay playsinline></video>
+        <button id="showVideo">Open camera</button>
+        <div id="errorMsg"></div>
+        <p class="warning"></p>
+    </div>
+
+     <script>
+    'use strict';
+    // Put variables in global scope to make them available to the browser console.
+    const constraints = window.constraints = {
+        audio: false,
+        video: true
+    };
+ 
+    function handleSuccess(stream) {
+        const video = document.querySelector('video');
+        const videoTracks = stream.getVideoTracks();
+        console.log('Got stream with constraints:', constraints);
+        console.log(`Using video device: ${videoTracks[0].label}`);
+        window.stream = stream; // make variable available to browser console
+        video.srcObject = stream;
+    }
+ 
+    function handleError(error) {
+        if(error.name === 'ConstraintNotSatisfiedError') {
+            let v = constraints.video;
+            errorMsg(`The resolution ${v.width.exact}x${v.height.exact} px is not supported by your device.`);
+        } else if(error.name === 'PermissionDeniedError') {
+            errorMsg('Permissions have not been granted to use your camera and ' + 'microphone, you need to allow the page access to your devices in ' + 'order for the demo to work.');
+        }
+        errorMsg(`getUserMedia error: ${error.name}`, error);
+    }
+ 
+    function errorMsg(msg, error) {
+        const errorElement = document.querySelector('#errorMsg');
+        errorElement.innerHTML += `<p>${msg}</p>`;
+        if(typeof error !== 'undefined') {
+            console.error(error);
+        }
+    }
+    async function init(e) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            handleSuccess(stream);
+            e.target.disabled = true;
+        } catch(e) {
+            handleError(e);
+        }
+    }
+    document.querySelector('#showVideo').addEventListener('click', e => init(e));
+    </script>
+</div>
+    
+</body>
+</html>
